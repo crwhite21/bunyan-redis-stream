@@ -1,0 +1,40 @@
+{
+  "name": "bunyan-redis-stream",
+  "version": "1.0.0",
+  "description": "Simple Bunyan stream to Redis",
+  "main": "index.js",
+  "dependencies": {
+    "json-stringify-safe": "^5.0.1"
+  },
+  "devDependencies": {
+    "bunyan": "^1.1.3",
+    "ioredis": "^1.7.1",
+    "jscs": "^2.0.0",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5",
+    "redis": "^0.12.1",
+    "redis-mock": "^0.4.9"
+  },
+  "scripts": {
+    "test": "mocha test/index.js",
+    "integration": "mocha test/integration.js",
+    "style": "jscs -c .jscsrc index.js test/**/*",
+    "lint": "jshint -c .jshintrc index.js test/**/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crwhite21/bunyan-redis-stream.git"
+  },
+  "keywords": [
+    "redis",
+    "bunyan",
+    "log",
+    "ioredis"
+  ],
+  "author": "Chris White <crwhite21@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/crwhite21/bunyan-redis-stream/issues"
+  },
+  "homepage": "https://github.com/crwhite21/bunyan-redis-stream"
+}
