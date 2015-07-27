@@ -1,4 +1,6 @@
 # bunyan-redis-stream
+[![Build Status](https://travis-ci.org/crwhite21/bunyan-redis-stream.svg)](https://travis-ci.org/crwhite21/bunyan-redis-stream)
+
 A lightweight Redis stream for Bunyan that can publish to a channel or push to a list.
 
 ## Installation
