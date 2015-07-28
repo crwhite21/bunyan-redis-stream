@@ -21,15 +21,12 @@ function RedisStream(opts) {
     opts = opts || {};
     this._key = opts.key || 'logs';
     this._client = opts.client;
-    this._type = opts.type ? opts.type.toLowerCase() : 'channel';
 
     if (!this._client) {
         throw new Error('Must pass a Redis client');
     }
 
-    if (possibleTypes.indexOf(this._type) === -1) {
-        throw new Error('Unknown Redis stream type: "' + this._type + '". Must be "channel" or "list".');
-    }
+    this._write = getWriteFunction(opts.type ? opts.type.toLowerCase() : 'channel');
 }
 
 util.inherits(RedisStream, events.EventEmitter);
@@ -44,11 +41,7 @@ RedisStream.prototype.write = function write(entry) {
 
     self.emit('log', entry);
 
-    if (this._type === 'list') {
-        writeList.call(this, entry);
-    } else if (this._type === 'channel') {
-        writeChannel.call(this, entry);
-    }
+    this._write(entry);
 };
 
 /**
@@ -92,6 +85,23 @@ function writeChannel(entry) {
  */
 function stringify(object) {
     return jsonStringify(object, null, 2);
+}
+
+/**
+ * Retrieves proper write function for the type passed
+ *
+ * @param {String} type
+ * @returns {Function}
+ * @throws {Error} Will throw an error if type is unknown
+ */
+function getWriteFunction(type) {
+    if (possibleTypes.indexOf(type) === -1) {
+        throw new Error('Unknown Redis stream type: "' + type + '". Must be "channel" or "list".');
+    } else if (type === 'channel') {
+        return writeChannel;
+    } else if (type === 'list') {
+        return writeList;
+    }
 }
 
 module.exports = RedisStream;
